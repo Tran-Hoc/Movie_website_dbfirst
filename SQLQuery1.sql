@@ -194,3 +194,29 @@ alter table Monthly_revenue
 add constraint Fk_Monreve_Movie foreign key(MovieId)
 references Movie(Id)
 go
+
+alter table Movie
+add Img_path nvarchar(max)
+go
+
+alter table Movie
+add Movie_path nvarchar(max)
+go
+
+alter table EpisodeOf
+add Num_ep int 
+go
+
+Select Name from genre
+
+Select p.Name from actor a, Person p where a.PersonId = p.Id
+
+Select p.Name from Director d, Person p where d.PersonId = p.Id
+
+Select p.Name from Producer pr, Person p where pr.PersonId = p.Id
+
+Select p.Name from AccUser a, Person p where a.PersonId = p.Id
+
+
+
+

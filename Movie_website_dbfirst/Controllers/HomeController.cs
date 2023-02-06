@@ -22,6 +22,10 @@ namespace Movie_website_dbfirst.Controllers
         {
             return View();
         }
+        public IActionResult Admin()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

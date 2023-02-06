@@ -1,0 +1,79 @@
+﻿@model Movie_website_dbfirst.Models.MovieVM
+@{
+    ViewBag.Title = "Create New Movie";
+}
+<div class="row">
+    <div class="col">
+        <h2 class="text-info">Thêm mới tập phim</h2>
+        <hr />
+        <div class="col-md-12">
+            <form asp-controller="Movies" asp-action="Create" method="post">
+                <div class="mb-3">
+                    <label asp-for="NameMovie" class="form-label">Tên phim</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Title" class="form-label">Tiêu đề</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label asp-for="NameMovie" class="form-label">Ngày phát hành</label>
+                    <input type="date" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Episodes" class="form-label">Thuộc bộ phim</label>
+                    <select class="form-select" class="form-control" asp-for="Episodes" asp-items=ViewBag.episodelist>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Genres" class="form-label">Thể loại</label>
+
+                    <select multiple multiselect-search="true" multiselect-select-all="true" multiselect-max-items="10" multiselect-hide-x="false" onchange="console.log(this.selectedOptions)" asp-for="Genres" asp-items=ViewBag.genrelist>
+                          
+                        </select>
+                   
+
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Directors" class="form-label">Đạo diễn</label>
+                  
+                        <select  multiple class="form-control" asp-for="Directors" asp-items=ViewBag.directorlist>
+                        </select>
+                
+                </div>
+              
+                <p>
+                    <div class="d-flex text-left align-items-center w-100">
+                        <strong class="sl">Actor</strong>
+                        <select id="multiple-checkboxes" multiple="multiple" asp-for="Actors" asp-items=ViewBag.actorList>
+                        </select>
+                    </div>
+                </p>
+
+            </form>
+
+        </div>
+        <form>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1">
+            </div>
+
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+
+        </form>
+        <select multiple class="form-control" asp-for="Directors" asp-items=ViewBag.directorlist>
+        </select>
+        <select multiple multiselect-search="true" multiselect-select-all="true" multiselect-max-items="10" multiselect-hide-x="false" onchange="console.log(this.selectedOptions)" asp-for="Genres" asp-items=ViewBag.genrelist>
+        </select>
+    </div>
+</div>
