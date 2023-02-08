@@ -77,15 +77,15 @@ namespace Movie_website_dbfirst.Controllers
                 return BadRequest();
             }
             //try
-            //{
+        //{
 
-            //}
+        //}
             //if (ModelState.IsValid)
-            //{
+        //{
             //    _context.Add(movieVM);
             //    await _context.SaveChangesAsync();
             //    return RedirectToAction(nameof(Index));
-            //}
+        //}
             return View(movieVM);
         }
 
