@@ -81,7 +81,7 @@ namespace Movie_website_dbfirst.Services
 
         public async Task<List<MovieVM>> GetAll()
         {
-
+         
             var vv = await _context.Movies.ToListAsync();
             List<MovieVM> movieVM = new List<MovieVM>();
             foreach (Movie v in vv)
