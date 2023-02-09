@@ -9,7 +9,7 @@
 > Scaffold-DbContext "Data Source=.\\Sqlexpress;Initial Catalog=Movie_DbFirst;Integrated Security=True; TrustServerCertificate=True; User ID=xnxx;Password=123456789;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
 
 ### Update database model: 
-> Scaffold-DbContext "Data Source=DESKTOP-7MRL7G7\SQLEXPRESS;Initial Catalog=Movie_DbFirst;Integrated Security=True; TrustServerCertificate=True; User ID=sa;Password=1234"  Microsoft.EntityFrameworkCore.SqlServer -OutputDir Data -ContextDir DataContext -Force
+> Scaffold-DbContext "Data Source=DESKTOP-7MRL7G7\SQLEXPRESS;Initial Catalog=Movie_DbFirst;Integrated Security=True; TrustServerCertificate=True; User ID=sa;Password=1234"  Microsoft.EntityFrameworkCore.SqlServer -OutputDir Data -ContextDir DataContext -DataAnnotations -Force
 
 ### Step
 1. create service interface, implement
