@@ -78,16 +78,21 @@ namespace Movie_website_dbfirst.Controllers
                 return RedirectToAction(nameof(Index));
 
             }
+            ViewBag.actorList = _context.ActorList();
+            ViewBag.directorlist = _context.DirectorList();
+            ViewBag.producerlist = _context.ProducerList();
+            ViewBag.genrelist = _context.GenresList();
+            ViewBag.episodelist = _context.EpsiodeList();
             //try
-        //{
+            //{
 
-        //}
+            //}
             //if (ModelState.IsValid)
-        //{
+            //{
             //    _context.Add(movieVM);
             //    await _context.SaveChangesAsync();
             //    return RedirectToAction(nameof(Index));
-        //}
+            //}
             return View(movieVM);
         }
 

@@ -51,11 +51,8 @@ go
 create table Producer(
 	Id UNIQUEIDENTIFIER  NOT NULL Primary key,	
 	Name nvarchar(max),
-	DateOfBirht DateTime,
-	Gender tinyint
-
 )
-go
+
 create table Director(
 	Id UNIQUEIDENTIFIER  NOT NULL primary key,	
 	Name nvarchar(max),

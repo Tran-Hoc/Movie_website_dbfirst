@@ -32,6 +32,7 @@ namespace Movie_website_dbfirst.Services
             
                 Movie movie = new Movie
                 {
+                    Id= Guid.NewGuid(),
                     NameMovie = movieVM.NameMovie,
                     ReleaseDate = movieVM.ReleaseDate,
                     Title = movieVM.Title,
@@ -47,62 +48,64 @@ namespace Movie_website_dbfirst.Services
                 _context.Add(movie);
              
                 // lay du lieu trong movieVM lấy id của movie 
-                List<GenreOfMovie> gens = new List<GenreOfMovie>();
+                //List<GenreOfMovie> gens = new List<GenreOfMovie>();
                 foreach (var m in movieVM.Genres)
                 {
                     GenreOfMovie genreOfMovie = new GenreOfMovie
                     {
-                        GenreId = m.Id,
+                        GenreId = m,
                         MovieId = movie.Id,//guid
                     };
-                    gens.Add(genreOfMovie);
+                    _context.Add(genreOfMovie);
                 }
-                _context.Add(gens);
+              //  _context.Add(gens);
               
 
-                List<Produced> pros= new List<Produced>();
+                //List<Produced> pros= new List<Produced>();
                 foreach( var p in movieVM.Producers)
                 {
                     Produced produced = new Produced
                     {
-                        ProducerId = p.Id,
+                        ProducerId = p,
                         MovieId = movie.Id
                     };
-                    pros.Add(produced);
+                    //pros.Add();
+                    _context.Add(produced); 
                 }
-                _context.Add(pros); 
+               
              
                
-                List<Acted> acted = new List<Acted>();  
+                //List<Acted> acted = new List<Acted>();  
                 foreach(var a in movieVM.Actors)
                 {
                     Acted act = new Acted
                     {
-                        ActorId = a.Id,
+                        ActorId = a,
                         MovieId = movie.Id
                     };
-                    acted.Add(act);
+                    //acted.Add();
+                    _context.Add(act);
                 }
-                _context.Add(acted);
+             
              
 
-                List<Directed> directed = new List<Directed>();
+                //List<Directed> directed = new List<Directed>();
                 foreach(var d in movieVM.Directors)
                 {
                     Directed dir = new Directed
                     {
-                        DirectorId = d.Id,
+                        DirectorId = d,
                         MovieId = movie.Id
                     };
-                    directed.Add(dir);
+                    _context.Add(dir);
                 }
-                _context.Add(directed);
+              
             
-                int numEp = _context.EpisodeOfs.Where(e => e.EpisodeId == movieVM.Episodes.Id).Count();
+                int numEp = _context.EpisodeOfs.Where(e => e.EpisodeId == movieVM.Episodes).Count();
 
                 EpisodeOf episodeOf = new EpisodeOf
                 {
-                    EpisodeId = movieVM.Episodes.Id, 
+                    EpisodeId = movieVM.Episodes, 
                     MovieId = movie.Id,
                     NumEp = numEp + 1
                 };

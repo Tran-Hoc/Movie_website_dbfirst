@@ -34,12 +34,12 @@ namespace Movie_website_dbfirst.Models
 
         public IFormFile vidoe { get; set; }
 
-        public List<Actor> Actors { get; set; }
-        public List<Producer> Producers { get; set; }
-        public List<Director> Directors { get; set; }
-        public List<Genre> Genres { get; set; }
-        public Episode Episodes { get; set; }
-        public List<Movie>? Movies { get; set; }
+        public List<Guid> Actors { get; set; }
+        public List<Guid> Producers { get; set; }
+        public List<Guid> Directors { get; set; }
+        public List<Guid> Genres { get; set; }
+        public Guid Episodes { get; set; }
+        //public List<Movie>? Movies { get; set; }
 
     }
 
