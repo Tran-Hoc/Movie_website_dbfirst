@@ -1,13 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Movie_website_dbfirst.Data;
 using System.ComponentModel.DataAnnotations;
+using System.Drawing;
+using System.Web;
+
 
 namespace Movie_website_dbfirst.Models
 {
     public class MovieVM
     {
 
-        public int Id { get; set; }
+        public Guid Id { get; set; }
+
         [Display(Name="Tên phim")]
         public string? NameMovie { get; set; }
 
@@ -25,6 +29,10 @@ namespace Movie_website_dbfirst.Models
 
         [Display(Name = "Phim")]
         public string? MoviePath { get; set; }
+
+        public IFormFile image { get; set; }
+
+        public IFormFile vidoe { get; set; }
 
         public List<Actor> Actors { get; set; }
         public List<Producer> Producers { get; set; }

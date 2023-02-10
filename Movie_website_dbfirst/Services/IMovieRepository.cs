@@ -7,10 +7,10 @@ namespace Movie_website_dbfirst.Services
     {
 
         Task<List<MovieVM>> GetAll();
-        Task<MovieVM> GetById(int? id);
+        Task<MovieVM> GetById(Guid? id);
         void Add(MovieVM movieVM);
         void Update(MovieVM movieVM);
-        void Delete(int? id);
+        void Delete(Guid? id);
         public SelectList GenresList();
         public SelectList ActorList();
         public SelectList ProducerList();

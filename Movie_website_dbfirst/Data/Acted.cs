@@ -14,9 +14,9 @@ public partial class Acted
 
     public byte? Roles { get; set; }
 
-    public int MovieId { get; set; }
+    public Guid MovieId { get; set; }
 
-    public int ActorId { get; set; }
+    public Guid ActorId { get; set; }
 
     [ForeignKey("ActorId")]
     [InverseProperty("Acteds")]

@@ -12,9 +12,9 @@ public partial class GenreOfMovie
     [Key]
     public int Id { get; set; }
 
-    public int MovieId { get; set; }
+    public Guid MovieId { get; set; }
 
-    public int GenreId { get; set; }
+    public Guid GenreId { get; set; }
 
     [ForeignKey("GenreId")]
     [InverseProperty("GenreOfMovies")]

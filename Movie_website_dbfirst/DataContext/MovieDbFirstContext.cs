@@ -38,13 +38,13 @@ public partial class MovieDbFirstContext : DbContext
 
     public virtual DbSet<Movie> Movies { get; set; }
 
-    public virtual DbSet<Person> People { get; set; }
-
     public virtual DbSet<Produced> Produceds { get; set; }
 
     public virtual DbSet<Producer> Producers { get; set; }
 
     public virtual DbSet<Rate> Rates { get; set; }
+
+    public virtual DbSet<Statistical> Statisticals { get; set; }
 
 //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
@@ -54,16 +54,14 @@ public partial class MovieDbFirstContext : DbContext
     {
         modelBuilder.Entity<AccUser>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__AccUser__3214EC07FCEE7B4B");
+            entity.HasKey(e => e.Id).HasName("PK__AccUser__3214EC073F5BBA84");
 
-            entity.HasOne(d => d.Person).WithMany(p => p.AccUsers)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Fk_AccUser_Person");
+            entity.Property(e => e.Id).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<Acted>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Acted__3214EC0722DC9E3E");
+            entity.HasKey(e => e.Id).HasName("PK__Acted__3214EC0787C8513E");
 
             entity.HasOne(d => d.Actor).WithMany(p => p.Acteds)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -76,16 +74,14 @@ public partial class MovieDbFirstContext : DbContext
 
         modelBuilder.Entity<Actor>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Actor__3214EC0783AF267F");
+            entity.HasKey(e => e.Id).HasName("PK__Actor__3214EC07775FA4F9");
 
-            entity.HasOne(d => d.Person).WithMany(p => p.Actors)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Fk_Actor_Person");
+            entity.Property(e => e.Id).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<Directed>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Directed__3214EC07A318D59C");
+            entity.HasKey(e => e.Id).HasName("PK__Directed__3214EC0765ECA2D4");
 
             entity.HasOne(d => d.Director).WithMany(p => p.Directeds)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -98,21 +94,21 @@ public partial class MovieDbFirstContext : DbContext
 
         modelBuilder.Entity<Director>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Director__3214EC0794DD3B27");
+            entity.HasKey(e => e.Id).HasName("PK__Director__3214EC070A732799");
 
-            entity.HasOne(d => d.Person).WithMany(p => p.Directors)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Fk_Director_Person");
+            entity.Property(e => e.Id).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<Episode>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Episode__3214EC07BCD28D98");
+            entity.HasKey(e => e.Id).HasName("PK__Episode__3214EC07DEF5DC32");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<EpisodeOf>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__EpisodeO__3214EC07AD93FD88");
+            entity.HasKey(e => e.Id).HasName("PK__EpisodeO__3214EC07E8578D95");
 
             entity.HasOne(d => d.Episode).WithMany(p => p.EpisodeOfs)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -125,12 +121,14 @@ public partial class MovieDbFirstContext : DbContext
 
         modelBuilder.Entity<Genre>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Genre__3214EC073E918B1F");
+            entity.HasKey(e => e.Id).HasName("PK__Genre__3214EC07B75F8C3E");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<GenreOfMovie>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__GenreOfM__3214EC07FE74CD8C");
+            entity.HasKey(e => e.Id).HasName("PK__GenreOfM__3214EC07A4EA60EB");
 
             entity.HasOne(d => d.Genre).WithMany(p => p.GenreOfMovies)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -143,7 +141,7 @@ public partial class MovieDbFirstContext : DbContext
 
         modelBuilder.Entity<MonthlyRevenue>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Monthly___3214EC074F8490AC");
+            entity.HasKey(e => e.Id).HasName("PK__Monthly___3214EC07E129CC60");
 
             entity.HasOne(d => d.Movie).WithMany(p => p.MonthlyRevenues)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -152,17 +150,14 @@ public partial class MovieDbFirstContext : DbContext
 
         modelBuilder.Entity<Movie>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Movie__3214EC0728BB59B0");
-        });
+            entity.HasKey(e => e.Id).HasName("PK__Movie__3214EC078957F0AF");
 
-        modelBuilder.Entity<Person>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__Person__3214EC0715D88644");
+            entity.Property(e => e.Id).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<Produced>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Produced__3214EC07BB4CE628");
+            entity.HasKey(e => e.Id).HasName("PK__Produced__3214EC0734439713");
 
             entity.HasOne(d => d.Movie).WithMany(p => p.Produceds)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -175,16 +170,14 @@ public partial class MovieDbFirstContext : DbContext
 
         modelBuilder.Entity<Producer>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Producer__3214EC07AE2A9EFB");
+            entity.HasKey(e => e.Id).HasName("PK__Producer__3214EC07A29C23EE");
 
-            entity.HasOne(d => d.Person).WithMany(p => p.Producers)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Fk_Producer_Person");
+            entity.Property(e => e.Id).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<Rate>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Rate__3214EC074FB6B88A");
+            entity.HasKey(e => e.Id).HasName("PK__Rate__3214EC07791F5D52");
 
             entity.HasOne(d => d.Movie).WithMany(p => p.Rates)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -193,6 +186,15 @@ public partial class MovieDbFirstContext : DbContext
             entity.HasOne(d => d.User).WithMany(p => p.Rates)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Fk_Rate_AccUser");
+        });
+
+        modelBuilder.Entity<Statistical>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Statisti__3214EC07E59E0D9E");
+
+            entity.HasOne(d => d.Movie).WithMany(p => p.Statisticals).HasConstraintName("Fk_Statistical_Movie");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Statisticals).HasConstraintName("Fk_Statistical_User");
         });
 
         OnModelCreatingPartial(modelBuilder);

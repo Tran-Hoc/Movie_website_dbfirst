@@ -10,14 +10,15 @@ namespace Movie_website_dbfirst.Data;
 public partial class Director
 {
     [Key]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
-    public int PersonId { get; set; }
+    public string? Name { get; set; }
+
+    [Column(TypeName = "datetime")]
+    public DateTime? DateOfBirht { get; set; }
+
+    public byte? Gender { get; set; }
 
     [InverseProperty("Director")]
     public virtual ICollection<Directed> Directeds { get; } = new List<Directed>();
-
-    [ForeignKey("PersonId")]
-    [InverseProperty("Directors")]
-    public virtual Person Person { get; set; } = null!;
 }

@@ -10,19 +10,23 @@ namespace Movie_website_dbfirst.Data;
 public partial class AccUser
 {
     [Key]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     [StringLength(100)]
     public string? UserName { get; set; }
 
     public string? Password { get; set; }
 
-    public int PersonId { get; set; }
+    public string? Name { get; set; }
 
-    [ForeignKey("PersonId")]
-    [InverseProperty("AccUsers")]
-    public virtual Person Person { get; set; } = null!;
+    [Column(TypeName = "datetime")]
+    public DateTime? DateOfBirht { get; set; }
+
+    public byte? Gender { get; set; }
 
     [InverseProperty("User")]
     public virtual ICollection<Rate> Rates { get; } = new List<Rate>();
+
+    [InverseProperty("User")]
+    public virtual ICollection<Statistical> Statisticals { get; } = new List<Statistical>();
 }

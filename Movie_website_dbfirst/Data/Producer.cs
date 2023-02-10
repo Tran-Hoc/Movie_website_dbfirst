@@ -10,13 +10,9 @@ namespace Movie_website_dbfirst.Data;
 public partial class Producer
 {
     [Key]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
-    public int PersonId { get; set; }
-
-    [ForeignKey("PersonId")]
-    [InverseProperty("Producers")]
-    public virtual Person Person { get; set; } = null!;
+    public string? Name { get; set; }
 
     [InverseProperty("Producer")]
     public virtual ICollection<Produced> Produceds { get; } = new List<Produced>();

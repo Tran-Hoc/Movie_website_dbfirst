@@ -18,9 +18,9 @@ public partial class Rate
     [Column("verbal_rate")]
     public string? VerbalRate { get; set; }
 
-    public int MovieId { get; set; }
+    public Guid MovieId { get; set; }
 
-    public int UserId { get; set; }
+    public Guid UserId { get; set; }
 
     [ForeignKey("MovieId")]
     [InverseProperty("Rates")]

@@ -10,7 +10,7 @@ namespace Movie_website_dbfirst.Data;
 public partial class Episode
 {
     [Key]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     public string? NameEp { get; set; }
 

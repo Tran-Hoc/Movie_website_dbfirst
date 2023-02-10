@@ -21,7 +21,7 @@ public partial class MonthlyRevenue
     [Column("Time_year_month", TypeName = "datetime")]
     public DateTime? TimeYearMonth { get; set; }
 
-    public int MovieId { get; set; }
+    public Guid MovieId { get; set; }
 
     [ForeignKey("MovieId")]
     [InverseProperty("MonthlyRevenues")]

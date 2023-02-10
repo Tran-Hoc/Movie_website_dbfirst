@@ -10,7 +10,7 @@ namespace Movie_website_dbfirst.Data;
 public partial class Movie
 {
     [Key]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     public string? NameMovie { get; set; }
 
@@ -48,4 +48,7 @@ public partial class Movie
 
     [InverseProperty("Movie")]
     public virtual ICollection<Rate> Rates { get; } = new List<Rate>();
+
+    [InverseProperty("Movie")]
+    public virtual ICollection<Statistical> Statisticals { get; } = new List<Statistical>();
 }

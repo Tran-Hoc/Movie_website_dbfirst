@@ -12,9 +12,9 @@ public partial class Directed
     [Key]
     public int Id { get; set; }
 
-    public int MovieId { get; set; }
+    public Guid MovieId { get; set; }
 
-    public int DirectorId { get; set; }
+    public Guid DirectorId { get; set; }
 
     [ForeignKey("DirectorId")]
     [InverseProperty("Directeds")]

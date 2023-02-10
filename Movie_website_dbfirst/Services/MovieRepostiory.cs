@@ -20,6 +20,16 @@ namespace Movie_website_dbfirst.Services
             //
             if (_context.Movies != null)
             {
+                //string filePath = Path.Combine("~/Images", Guid.NewGuid().ToString() + Path.GetExtension(pvm.Picture.FileName));
+                //pvm.Picture.SaveAs(Server.MapPath(filePath));
+
+                /*
+                 * create movie and acted, directed : idmovie create by guid() in c# data type in sql is uniqueidentifier, 
+                 * 
+                 * table with 2 primary key and also is foregin key* 
+
+                 */
+            
                 Movie movie = new Movie
                 {
                     NameMovie = movieVM.NameMovie,
@@ -28,12 +38,78 @@ namespace Movie_website_dbfirst.Services
                     ImgPath = movieVM.ImgPath,
                     MoviePath = movieVM.ImgPath,
                 };
-                GenreOfMovie genreOfMovie = new GenreOfMovie
-                {
-                    //GenreId = 
-                };
+                string imgpath = Path.Combine("~/Images", movie.Id.ToString() + Path.GetExtension(movieVM.image.FileName));
+                string moviepath = Path.Combine("~/Video", movie.Id.ToString() + Path.GetExtension(movieVM.vidoe.FileName));
+             
+                movieVM.ImgPath = imgpath;
+                movieVM.MoviePath = moviepath;
+
                 _context.Add(movie);
+             
+                // lay du lieu trong movieVM lấy id của movie 
+                List<GenreOfMovie> gens = new List<GenreOfMovie>();
+                foreach (var m in movieVM.Genres)
+                {
+                    GenreOfMovie genreOfMovie = new GenreOfMovie
+                    {
+                        GenreId = m.Id,
+                        MovieId = movie.Id,//guid
+                    };
+                    gens.Add(genreOfMovie);
+                }
+                _context.Add(gens);
+              
+
+                List<Produced> pros= new List<Produced>();
+                foreach( var p in movieVM.Producers)
+                {
+                    Produced produced = new Produced
+                    {
+                        ProducerId = p.Id,
+                        MovieId = movie.Id
+                    };
+                    pros.Add(produced);
+                }
+                _context.Add(pros); 
+             
+               
+                List<Acted> acted = new List<Acted>();  
+                foreach(var a in movieVM.Actors)
+                {
+                    Acted act = new Acted
+                    {
+                        ActorId = a.Id,
+                        MovieId = movie.Id
+                    };
+                    acted.Add(act);
+                }
+                _context.Add(acted);
+             
+
+                List<Directed> directed = new List<Directed>();
+                foreach(var d in movieVM.Directors)
+                {
+                    Directed dir = new Directed
+                    {
+                        DirectorId = d.Id,
+                        MovieId = movie.Id
+                    };
+                    directed.Add(dir);
+                }
+                _context.Add(directed);
+            
+                int numEp = _context.EpisodeOfs.Where(e => e.EpisodeId == movieVM.Episodes.Id).Count();
+
+                EpisodeOf episodeOf = new EpisodeOf
+                {
+                    EpisodeId = movieVM.Episodes.Id, 
+                    MovieId = movie.Id,
+                    NumEp = numEp + 1
+                };
+
+                _context.Add(episodeOf);
                 _context.SaveChanges();
+
 
             }
 
@@ -74,14 +150,14 @@ namespace Movie_website_dbfirst.Services
             //return movieVM;
         }
 
-        public void Delete(int? id)
+        public void Delete(Guid? id)
         {
             throw new NotImplementedException();
         }
 
         public async Task<List<MovieVM>> GetAll()
         {
-         
+
             var vv = await _context.Movies.ToListAsync();
             List<MovieVM> movieVM = new List<MovieVM>();
             foreach (Movie v in vv)
@@ -95,8 +171,9 @@ namespace Movie_website_dbfirst.Services
             };
             return movieVM;
         }
-        public async Task<MovieVM> GetById(int? id)
-        {
+        
+        // for details
+        public async Task<MovieVM> GetById(Guid? id) { 
 
             // add dung  honw
             //
@@ -115,10 +192,10 @@ namespace Movie_website_dbfirst.Services
 
             // lay tu bang chung cua quan he nhieu nhieu 
 
-            var genres = new SelectList(_context.Genres.FromSql($"Select Name from genre").ToList());
-            var actors = new SelectList(_context.Actors.FromSql($"Select p.Name from actor a, Person p where a.PersonId = p.Id").ToList());
-            var producers = new SelectList(_context.Producers.FromSql($"Select p.Name from Producer pr, Person p where pr.PersonId = p.Id").ToList());
-            var directors = new SelectList(_context.Directors.FromSql($"Select p.Name from Director d, Person p where d.PersonId = p.Id").ToList());
+            //var genres = new SelectList(_context.Genres.FromSql($"Select Name from genre").ToList());
+            //var actors = new SelectList(_context.Actors.FromSql($"Select p.Name from actor a, Person p where a.PersonId = p.Id").ToList());
+            //var producers = new SelectList(_context.Producers.FromSql($"Select p.Name from Producer pr, Person p where pr.PersonId = p.Id").ToList());
+            //var directors = new SelectList(_context.Directors.FromSql($"Select p.Name from Director d, Person p where d.PersonId = p.Id").ToList());
 
             var movieVM = new MovieVM
             {
@@ -142,6 +219,8 @@ namespace Movie_website_dbfirst.Services
         {
             throw new NotImplementedException();
         }
+
+
         public SelectList GenresList()
         {
             var olist = from a in _context.Genres select new { Id = a.Id, Name = a.Name };
@@ -151,20 +230,20 @@ namespace Movie_website_dbfirst.Services
 
         public SelectList ActorList()
         {
-            var olist = from actor in _context.Actors join per in _context.People on actor.PersonId equals per.Id select new { Id = actor.Id, Name = per.Name };
+            var olist = from actor in _context.Actors select new { Id = actor.Id, Name = actor.Name };
             var actors = new SelectList(olist, "Id", "Name");
-        
+
             return actors;
         }
         public SelectList ProducerList()
         {
-            var olist = from a in _context.Producers join per in _context.People on a.PersonId equals per.Id select new { Id = a.Id, Name = per.Name };
+            var olist = from a in _context.Producers select new { Id = a.Id, Name = a.Name };
             var list = new SelectList(olist, "Id", "Name");
             return list;
         }
         public SelectList DirectorList()
         {
-            var olist = from a in _context.Directors join per in _context.People on a.PersonId equals per.Id select new { Id = a.Id, Name = per.Name };
+            var olist = from a in _context.Directors select new { Id = a.Id, Name = a.Name };
             var list = new SelectList(olist, "Id", "Name");
             return list;
         }

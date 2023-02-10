@@ -12,9 +12,9 @@ public partial class EpisodeOf
     [Key]
     public int Id { get; set; }
 
-    public int MovieId { get; set; }
+    public Guid MovieId { get; set; }
 
-    public int EpisodeId { get; set; }
+    public Guid EpisodeId { get; set; }
 
     [Column("Num_ep")]
     public int? NumEp { get; set; }

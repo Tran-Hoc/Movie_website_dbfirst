@@ -12,9 +12,9 @@ public partial class Produced
     [Key]
     public int Id { get; set; }
 
-    public int MovieId { get; set; }
+    public Guid MovieId { get; set; }
 
-    public int ProducerId { get; set; }
+    public Guid ProducerId { get; set; }
 
     [ForeignKey("MovieId")]
     [InverseProperty("Produceds")]

@@ -38,7 +38,7 @@ namespace Movie_website_dbfirst.Controllers
         }
 
         // GET: MovieVMs/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
             {
@@ -70,11 +70,13 @@ namespace Movie_website_dbfirst.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name")] MovieVM movieVM)
+        public async Task<IActionResult> Create(MovieVM movieVM)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return BadRequest();
+                _context.Add(movieVM);
+                return RedirectToAction(nameof(Index));
+
             }
             //try
         //{

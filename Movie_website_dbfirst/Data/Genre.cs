@@ -10,7 +10,7 @@ namespace Movie_website_dbfirst.Data;
 public partial class Genre
 {
     [Key]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     [StringLength(500)]
     public string? Name { get; set; }
