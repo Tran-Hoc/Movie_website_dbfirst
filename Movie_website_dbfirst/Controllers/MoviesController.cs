@@ -13,15 +13,15 @@ namespace Movie_website_dbfirst.Controllers
 {
     public class MoviesController : Controller
     {
-      //  private readonly MovieDbFirstContext _context;
-        private readonly IMovieRepository _context;
+        //  private readonly MovieDbFirstContext _context;
+        private readonly IMovieRepository<MovieVM> _context;
         //   public static List<MovieVM> movies = new List<MovieVM>();
-   //     private MovieRepostiory _movie;
-        public MoviesController(IMovieRepository context)
+        //     private MovieRepostiory _movie;
+        public MoviesController(IMovieRepository<MovieVM> context)
 
         {
-           _context = context;
-         
+            _context = context;
+
         }
         // GET: MovieVMs
         public async Task<IActionResult> Index()
@@ -37,26 +37,12 @@ namespace Movie_website_dbfirst.Controllers
             //return View(await _context.MovieVM.ToListAsync());
         }
 
-        // GET: MovieVMs/Details/5
-        public async Task<IActionResult> Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var movieVM = _context.GetById(id);
-            if (movieVM == null)
-            {
-                return NotFound();
-            }
-
-            return View(movieVM);
-        }
+      
 
         //GET: MovieVMs/Create
         public IActionResult Create()
         {
-            
+
             ViewBag.actorList = _context.ActorList();
             ViewBag.directorlist = _context.DirectorList();
             ViewBag.producerlist = _context.ProducerList();
@@ -70,6 +56,8 @@ namespace Movie_website_dbfirst.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        // 1GB
+        [RequestFormLimits(MultipartBodyLengthLimit = 1073741824)]
         public async Task<IActionResult> Create(MovieVM movieVM)
         {
             if (ModelState.IsValid)
@@ -78,106 +66,174 @@ namespace Movie_website_dbfirst.Controllers
                 return RedirectToAction(nameof(Index));
 
             }
-            //try
-        //{
+            ViewBag.actorList = _context.ActorList();
+            ViewBag.directorlist = _context.DirectorList();
+            ViewBag.producerlist = _context.ProducerList();
+            ViewBag.genrelist = _context.GenresList();
+            ViewBag.episodelist = _context.EpsiodeList();
 
-        //}
-            //if (ModelState.IsValid)
-        //{
-            //    _context.Add(movieVM);
-            //    await _context.SaveChangesAsync();
-            //    return RedirectToAction(nameof(Index));
-        //}
             return View(movieVM);
         }
 
-        //// GET: MovieVMs/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null || _context.MovieVM == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // GET: MovieVMs/Details/5
+        public async Task<IActionResult> Details(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //    var movieVM = await _context.MovieVM.FindAsync(id);
-        //    if (movieVM == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(movieVM);
-        //}
+            try
+            {
+                MovieCVM movieVM = (MovieCVM)await _context.GetById(id);
+                if (movieVM == null)
+                {
+                    return NotFound();
+                }
 
-        //// POST: MovieVMs/Edit/5
-        //// To protect from overposting attacks, enable the specific properties you want to bind to.
-        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("ID,Name")] MovieVM movieVM)
-        //{
-        //    if (id != movieVM.ID)
-        //    {
-        //        return NotFound();
-        //    }
+                ViewData["Actors"] = string.Join(", ", movieVM.Actors);
+                ViewData["Directors"] = string.Join(", ", movieVM.Directors);
+                ViewData["Producers"] = string.Join(", ", movieVM.Producers);
+                ViewData["Genres"] = string.Join(", ", movieVM.Genres);
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(movieVM);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!MovieVMExists(movieVM.ID))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(movieVM);
-        //}
+                return View(movieVM);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
 
-        //// GET: MovieVMs/Delete/5
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id == null || _context.MovieVM == null)
-        //    {
-        //        return NotFound();
-        //    }
+        }
+        // GET: MovieVMs/Edit/5
+        public async Task<IActionResult> Edit(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //    var movieVM = await _context.MovieVM
-        //        .FirstOrDefaultAsync(m => m.ID == id);
-        //    if (movieVM == null)
-        //    {
-        //        return NotFound();
-        //    }
+            try
+            {
+                MovieVM movieVM = await _context.UpdateViewById(id);
+                if (movieVM == null)
+                {
+                    return NotFound();
+                }
+                ViewBag.actorList = _context.ActorList();
+                ViewBag.directorlist = _context.DirectorList();
+                ViewBag.producerlist = _context.ProducerList();
+                ViewBag.genrelist = _context.GenresList();
+                ViewBag.episodelist = _context.EpsiodeList();
 
-        //    return View(movieVM);
-        //}
+                return View(movieVM);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
 
-        //// POST: MovieVMs/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
-        //    if (_context.MovieVM == null)
-        //    {
-        //        return Problem("Entity set 'MovieDbFirstContext.MovieVM'  is null.");
-        //    }
-        //    var movieVM = await _context.MovieVM.FindAsync(id);
-        //    if (movieVM != null)
-        //    {
-        //        _context.MovieVM.Remove(movieVM);
-        //    }
+        }
 
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
+        // POST: MovieVMs/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(MovieVM movieVM)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Update(movieVM);
+                return RedirectToAction(nameof(Index));
+
+            }
+            ViewBag.actorList = _context.ActorList();
+            ViewBag.directorlist = _context.DirectorList();
+            ViewBag.producerlist = _context.ProducerList();
+            ViewBag.genrelist = _context.GenresList();
+            ViewBag.episodelist = _context.EpsiodeList();
+
+            return View(movieVM);
+
+        }
+
+        // GET: MovieVMs/Delete/5
+        public async Task<IActionResult> Delete(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                MovieCVM movieVM = (MovieCVM)await _context.GetById(id);
+                if (movieVM == null)
+                {
+                    return NotFound();
+                }
+
+                ViewData["Actors"] = string.Join(", ", movieVM.Actors);
+                ViewData["Directors"] = string.Join(", ", movieVM.Directors);
+                ViewData["Producers"] = string.Join(", ", movieVM.Producers);
+                ViewData["Genres"] = string.Join(", ", movieVM.Genres);
+
+                return View(movieVM);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            //if (id == null || _context.MovieVM == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //var movieVM = await _context.MovieVM
+            //    .FirstOrDefaultAsync(m => m.ID == id);
+            //if (movieVM == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //return View(movieVM);
+        }
+
+        // POST: MovieVMs/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        {
+            if(id == null)
+            {
+                return BadRequest();
+            }
+            _context.Delete(id);
+
+            //Product product = db.Products.Find(id);
+            //string file_name = product.PicturePath;
+            //string path = Server.MapPath(file_name);
+            //FileInfo file = new FileInfo(path);
+            //if (file.Exists)
+            //{
+            //    file.Delete();
+            //}
+            //db.Products.Remove(product);
+            //db.SaveChanges();
+            //return RedirectToAction("Index");
+            //if (_context.MovieVM == null)
+            //{
+            //    return Problem("Entity set 'MovieDbFirstContext.MovieVM'  is null.");
+            //}
+            //var movieVM = await _context.MovieVM.FindAsync(id);
+            //if (movieVM != null)
+            //{
+            //    _context.MovieVM.Remove(movieVM);
+            //}
+
+            //await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
 
         //private bool MovieVMExists(int id)
         //{

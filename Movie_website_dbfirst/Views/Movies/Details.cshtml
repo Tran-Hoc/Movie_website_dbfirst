@@ -1,4 +1,4 @@
-﻿@model Movie_website_dbfirst.Models.MovieVM
+﻿@model Movie_website_dbfirst.Models.MovieCVM
 
 @{
     ViewData["Title"] = "Details";
@@ -11,42 +11,84 @@
     <h4>MovieVM</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.NameMovie)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.NameMovie)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ReleaseDate)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ReleaseDate)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Title)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Title)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.AvgRating)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.AvgRating)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImgPath)
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Actors)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImgPath)
+        <dd class="col-sm-10">
+            @ViewData["Actors"]
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MoviePath)
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Directors)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MoviePath)
+        <dd class="col-sm-10">
+            @ViewData["Directors"]
         </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Producers)
+        </dt>
+        <dd class="col-sm-10">
+            @ViewData["Producers"]
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Genres)
+        </dt>
+        <dd class="col-sm-10">
+            @ViewData["Genres"]
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Episodes)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Episodes)
+        </dd>
+
+
+        <dd>
+            <h2>Video</h2>
+            <video controls autoplay loop>
+                <source src=@Url.Content(Model.MoviePath) type="video/mp4" >
+                Your browser does not support the video tag.
+            </video>
+
+        </dd>
+        <dd>
+            <h2>Picture</h2>
+            <picture>
+
+                <img src=@Url.Content(Model.ImgPath) alt="Hình ảnh" style="width:auto;">
+            </picture>
+
+        </dd>
+
     </dl>
 </div>
 <div>

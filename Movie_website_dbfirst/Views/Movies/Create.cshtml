@@ -12,77 +12,86 @@
             <form asp-controller="Movies" asp-action="Create" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label asp-for="NameMovie" class="form-label">Tên phim</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" asp-for="NameMovie" required>
+                    <span asp-validation-for="NameMovie" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="Title" class="form-label">Tiêu đề</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" asp-for="Title" required>
+                    <span asp-validation-for="Title" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="NameMovie" class="form-label">Ngày phát hành</label>
-                    <input type="date" class="form-control" />
+                    <label asp-for="ReleaseDate" class="form-label">Ngày phát hành</label>
+                    <input type="date" class="form-control" asp-for="ReleaseDate" required>
+                    <span asp-validation-for="ReleaseDate" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="Episodes" class="form-label">Thuộc bộ phim</label>
-                    <select class="form-select" class="form-control" asp-for="Episodes" asp-items=ViewBag.episodelist>
-                        <option disabled selected></option>
+                    <select class="form-select" class="form-control" asp-for="Episodes" asp-items=ViewBag.episodelist required>
+                      
                     </select>
+                    <span asp-validation-for="Episodes" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="Genres" class="form-label">Thể loại</label>
-                    <select multiple class="form-control" data-live-search="true" asp-for="Genres" asp-items=ViewBag.genrelist>
-                        <option disabled selected></option>
+                    <select multiple class="form-control" data-live-search="true" asp-for="Genres" asp-items=ViewBag.genrelist required>
+                     
                     </select>
+                    <span asp-validation-for="Genres" class="text-danger"></span>
+
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="Directors" class="form-label">Đạo diễn</label>
-                    <select multiple class="form-control" asp-for="Directors" asp-items=ViewBag.directorlist>
-                        <option disabled selected></option>
+                    <select multiple class="form-control" asp-for="Directors" asp-items=ViewBag.directorlist required>
+                     
                     </select>
+                    <span asp-validation-for="Directors" class="text-danger"></span>
+
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Nhà sản xuất</label>
-                    <select multiple class="form-control" asp-for="Producers" asp-items=ViewBag.producerlist>
-                        <option disabled selected></option>
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="Directors" class="form-label">Diễn viên</label>
-                    <select multiple class="form-control" asp-for="Actors" asp-items=ViewBag.actorList>
-                        <option disabled selected></option>
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="Title" class="form-label">Hình ảnh</label>
-                    <input type="file" accept="image/*" class="form-control" asp-for="image">
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="Title" class="form-label">Video</label>
-                    <input type="file" accept="video/*"  class="form-control" asp-for="vidoe">
+                    <select multiple class="form-control" asp-for="Producers" asp-items=ViewBag.producerlist required>
                     
+                    </select>
+                    <span asp-validation-for="Producers" class="text-danger"></span>
+
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Actors" class="form-label">Diễn viên</label>
+                    <select multiple class="form-control" asp-for="Actors" asp-items=ViewBag.actorList required>
+                   
+                    </select>
+                    <span asp-validation-for="Actors" class="text-danger"></span>
+
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="image" class="form-label">Hình ảnh</label>
+                    <input type="file" accept="image/*" class="form-control" asp-for="image">
+                    <span asp-validation-for="image" class="text-danger"></span>
+
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="vidoe" class="form-label">Video</label>
+                    <input type="file" accept="video/*" class="form-control" asp-for="vidoe">
+                    <span asp-validation-for="vidoe" class="text-danger"></span>
 
                 </div>
                 <div class="mb-5 row">
                     <div class="col-5">
-                        <button type="submit" class="btn btn-danger col-sm-5" style="margin:10px;">Huỷ</button>
-
-                        <button type="submit" class="btn btn-success col-sm-5" style="margin:10px;">Lưu</button>
+                        <input type="submit" asp-action="Create" value="Lưu" class="btn btn-success col-sm-5" style="margin:10px;">
+                        <button asp-action="Index" class="btn btn-danger col-sm-5" style="margin:10px;">Huỷ</button>
                     </div>
-                  
                 </div>
-              
-
             </form>
-
         </div>
     </div>
 </div>

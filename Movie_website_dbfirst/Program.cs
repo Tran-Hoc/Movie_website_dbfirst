@@ -1,5 +1,9 @@
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Movie_website_dbfirst.DataContext;
+using Movie_website_dbfirst.Models;
 using Movie_website_dbfirst.Services;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +11,25 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<MovieDbFirstContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped<IMovieRepository, MovieRepostiory>();
+builder.Services.AddScoped<IMovieRepository<MovieVM>, MovieRepostiory>();
+
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.ValueLengthLimit = int.MaxValue;
+    options.MultipartBodyLengthLimit = int.MaxValue; // if don't set default value is: 128 MB
+    options.MultipartHeadersLengthLimit = int.MaxValue;
+});
+
+builder.Services.Configure<IISServerOptions>(options =>
+{       
+    options.MaxRequestBodySize = int.MaxValue;
+});
+
+builder.Services.Configure<KestrelServerOptions>(options =>
+{
+    options.Limits.MaxRequestBodySize = int.MaxValue; // if don't set default value is: 30 MB
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

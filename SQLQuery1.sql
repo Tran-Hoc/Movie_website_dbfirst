@@ -51,11 +51,8 @@ go
 create table Producer(
 	Id UNIQUEIDENTIFIER  NOT NULL Primary key,	
 	Name nvarchar(max),
-	DateOfBirht DateTime,
-	Gender tinyint
-
 )
-go
+
 create table Director(
 	Id UNIQUEIDENTIFIER  NOT NULL primary key,	
 	Name nvarchar(max),
@@ -206,3 +203,5 @@ insert into Episode values ('Phim 1');
 insert into Episode values ('Phim 2');
 insert into Episode values ('Phim 3');
 insert into Episode values ('Phim 4');
+
+select g.Name from GenreOfMovie gom, Genre g where gom.GenreId = g.Id and gom.MovieId = '0d5980be-42b7-43ce-a347-1bc359623445';
